@@ -18,25 +18,20 @@
             <form action="#" method="post" class="user">
 
               <div class="form-group">
-                <div class="form-user">
-                  Pertanyaan :
-                </div>
-                <div class="form-user">
-                  <?php
-                  foreach ($pertanyaan as $key) {
-                    $p = $this->db->get_where('indikator', ['kode_indikator' => $key['pilihan']])->row_array();
-                    echo "- " . $p['nama'] . " ? " . ($key['jawaban'] == 'y' ? 'Ya' : 'Tidak');
-                    echo "<br/>";
-                  }
-                  ?>
-                </div>
-
-
+                  <div class="form-user">
+                    Hasil : 
+                  </div>
+                  <div class="form-user">
+                    Dengan demikian hasil terbesar terdapat pada <?= $hasil[$index_terpilih]['rule'] ?> dengan nilai <?= $hasil[$index_terpilih]['presentase']/24*100 ?>%, maka hasil diagnosa menyatakan user mempunyai tipe kepribadian
+                    <?= $hasil[$index_terpilih]['nama_karakteristik'] ?>
+                  </div>
+                        
+                   
               </div>
 
               <div class="form-group">
                 <div class="form-user">
-                  Diagnosa :
+                  Karakter :
                 </div>
                 <div class="form-user">
                   <?= $karakteristik['nama'] ?>
@@ -44,7 +39,7 @@
               </div>
               <div class="form-group">
                 <div class="form-user">
-                  Solusi :
+                  Deskripsi :
                 </div>
                 <div class="form-user">
                   <?= $karakteristik['solusi'] ?>

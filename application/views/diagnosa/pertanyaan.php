@@ -29,10 +29,10 @@
                 <br/>
                 <div class="row">
                   <div class="col-md-6">
-                    <a href="<?= base_url('Diagnosa/cek/y/'.$indikator[$index]['kode_indikator'].'/'.$index_pars) ?>" class="btn btn-primary btn-user btn-block" style="color: white">Ya</a>
+                    <a href="<?= base_url('Diagnosa/cek/y/'.$indikator[$index]['kode_indikator'].'/'.$index_pars.'/'.$indikator[$index]['kelompok']) ?>" class="btn btn-primary btn-user btn-block" style="color: white">Ya</a>
                   </div>
                   <div class="col-md-6">
-                    <a href="<?= base_url('Diagnosa/cek/n/'.$indikator[$index]['kode_indikator'].'/'.$index_pars) ?>" class="btn btn-danger btn-user btn-block" style="color: white">Tidak</a>
+                    <a href="<?= base_url('Diagnosa/cek/n/'.$indikator[$index]['kode_indikator'].'/'.$index_pars.'/'.$indikator[$index]['kelompok']) ?>" class="btn btn-danger btn-user btn-block" style="color: white">Tidak</a>
                   </div>
                 </div>
                 

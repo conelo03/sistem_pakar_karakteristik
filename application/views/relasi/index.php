@@ -73,16 +73,17 @@
         <div class="modal-body">
           <div class="form-group">
             <select name="kode_karakteristik" class="form-control " id="exampleInputEmail" placeholder="Nama">
+            <option disabled selected>Pilih karakteristik</option>
               <?php foreach ($karakteristik as $p) { ?>
-                <option value="#">Pilih karakteristik</option>
                 <option value="<?= $p['kode_karakteristik'] ?>"><?= $p['nama'] ?></option>
               <?php } ?>
             </select>
           </div>
           <div class="form-group">
             <?php foreach ($indikator as $g) { ?>
+              <?= $g['kelompok'] ?>
               <span class="form-control form-user" for="indikator">
-                <input type="checkbox" name="indikator[]" class=" " id="exampleInputEmail" value="<?= $g['kode_indikator'] ?>"> <?= $g['nama'] ?> 
+                <input type="checkbox" name="indikator[]" class="" id="exampleInputEmail" value="<?= $g['kode_indikator'] ?>"> <?= $g['nama'] ?> 
               </span> <br>
             <?php } ?>
           </div>

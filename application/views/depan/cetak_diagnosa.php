@@ -35,7 +35,7 @@
             <div class="col-lg-12">
               <div class="p-5">
                 <div class="text-center">
-                  <h1 class="h4 text-gray-900 mb-4">SISTEM PAKAR TINGKAT KECEMASAN</h1>
+                  <h1 class="h4 text-gray-900 mb-4">SISTEM PAKAR KARAKTERISTIK</h1>
                 </div>
                 <div class="text-center">
                   <h2 class="h4 text-gray-900 mb-4">Hasil Diagnosa</h1>
@@ -71,14 +71,22 @@
                       <input type="text" name="no_telp" class="form-control form-control-user" id="exampleInputEmail" placeholder="Masukan No Telepon" required value="<?= $pasien['no_telp']; ?>" disabled>
                     </div>
                   </div>
-                  <div class="form-group row">
-                    <label for="staticEmail" class="col-sm-2 col-form-label">Hasil Diagnosa</label>
-                    <div class="col-sm-10">
-                    </div>
+                  
+                  <div class="form-group">
+                      <div class="form-user">
+                        Hasil : 
+                      </div>
+                      <div class="form-user">
+                        Dengan demikian hasil terbesar terdapat pada <?= $hasil[$index_terpilih]['rule'] ?> dengan nilai <?= $hasil[$index_terpilih]['presentase']/24*100 ?>%, maka hasil diagnosa menyatakan user mempunyai tipe kepribadian
+                        <?= $hasil[$index_terpilih]['nama_karakteristik'] ?>
+                      </div>
+                            
+                      
                   </div>
+
                   <div class="form-group">
                     <div class="form-user">
-                      Diagnosa :
+                      Karakter :
                     </div>
                     <div class="form-user">
                       <?= $karakteristik['nama'] ?>
@@ -86,25 +94,26 @@
                   </div>
                   <div class="form-group">
                     <div class="form-user">
-                      Solusi :
+                      Deskripsi :
                     </div>
                     <div class="form-user">
                       <?= $karakteristik['solusi'] ?>
                     </div>
 
                   </div>
+
                 </form>
                 <div class="row">
                   <div class="col-8"></div>
                   <div class="col-4">
                     <div class="text-center">
-                      <p class="text-gray-900">Bekasi, <?= date('d M Y', strtotime('now')); ?></p>
+                      <p class="text-gray-900">Bandung, <?= date('d M Y', strtotime('now')); ?></p>
                       <br />
                       <br />
                       <br />
                       <br />
                       <br />
-                      <p class="text-gray-900">Dr.Sulistyaningsih </p>
+                      <p class="text-gray-900">Admin </p>
                     </div>
                   </div>
                 </div>

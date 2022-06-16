@@ -22,8 +22,8 @@
                   <th>#</th>
                   <th>Kode</th>
                   <th>Nama Karakter</th>
+                  <th>Definisi</th>
                   <th>Deskripsi</th>
-                  <th>Solusi</th>
                   <th>Aksi</th>
                 </tr>
               </thead>
@@ -76,10 +76,10 @@
             <input type="text" name="nama" class="form-control form-control-user" id="exampleInputEmail" placeholder="Nama" required>
           </div>
           <div class="form-group">
-            <input type="text" name="deskripsi" class="form-control form-control-user" id="exampleInputEmail" placeholder="Deskripsi" required>
+            <input type="text" name="deskripsi" class="form-control form-control-user" id="exampleInputEmail" placeholder="Definisi" required>
           </div>
           <div class="form-group">
-            <label>Solusi</label>
+            <label>Deskripsi</label>
             <textarea type="text" name="solusi" class="form-control ckeditor" id="ckeditor" required></textarea>
           </div>
         </div>
@@ -115,11 +115,11 @@
                 <input type="text" name="nama" class="form-control form-control-user" id="exampleInputEmail" value="<?= $g['nama'] ?>" required>
               </div>
               <div class="form-group">
-                Deskripsi :
+                Definisi :
                 <input type="text" name="deskripsi" class="form-control form-control-user" id="exampleInputEmail" value="<?= $g['deskripsi'] ?>" required>
               </div>
               <div class="form-group">
-            <label>Solusi</label>
+            <label>Deskripsi</label>
             <textarea type="text" name="solusi" class="form-control ckeditor" id="ckeditor" required><?= str_replace("<br />", '', $g['solusi']) ?></textarea>
           </div>
             </div>

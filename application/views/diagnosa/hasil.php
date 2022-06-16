@@ -16,11 +16,11 @@
           <div class="col-lg-12">
             <div class="p-5">
               <div class="text-center">
-                <h1 class="h4 text-gray-900 mb-4">Hasil Diagnosa</h1>
+                <h1 class="h4 text-gray-900 mb-4">Hasil Perhitungan</h1>
               </div>
               <form action="#" method="post" class="user">
                   
-                <div class="form-group">
+                <!-- <div class="form-group">
                   <div class="form-user">
                     Pertanyaan : 
                   </div>
@@ -35,23 +35,36 @@
                   </div>
                         
                    
+                </div> -->
+
+                <div class="form-group">
+                  <div class="form-user">
+                    Perhitungan : 
+                  </div>
+                  <div class="form-user">
+                    <?php
+                      foreach ($hasil as $key) {
+                        echo "- " . $key['rule']. " = IF ".implode(', ', $key['hitung'])." THEN ".$key['kode_karakteristik'];
+                        echo "<br/>";
+                        echo "P (A) = ".$key['presentase']."/24*100 = ".($key['presentase']/24*100).' %';
+                        echo "<br/>";
+                        echo "<br/>";
+                      }
+                    ?>
+                  </div>
+                        
+                   
                 </div>
 
                 <div class="form-group">
                   <div class="form-user">
-                    Diagnosa : 
+                    Hasil : 
                   </div>
                   <div class="form-user">
-                    <?= $karakteristik['nama'] ?>
+                    Dengan demikian hasil terbesar terdapat pada <?= $hasil[$index_terpilih]['rule'] ?> dengan nilai <?= $hasil[$index_terpilih]['presentase']/24*100 ?>%, maka hasil diagnosa menyatakan user mempunyai tipe kepribadian
+                    <?= $hasil[$index_terpilih]['nama_karakteristik'] ?>
                   </div>
-                </div>
-                <div class="form-group">
-                  <div class="form-user">
-                    Solusi : 
-                  </div>
-                  <div class="form-user">
-                    <?= $karakteristik['solusi'] ?>
-                  </div>
+                        
                    
                 </div>
                 

@@ -15,7 +15,7 @@
         <?= $key['deskripsi'] ?>
       </div>
       <div class="card-body">
-        <b>Solusi :</b> <br />
+        <b>Deskripsi :</b> <br />
         <?= $key['solusi'] ?>
       </div>
     </div>

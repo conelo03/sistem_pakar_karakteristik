@@ -12,6 +12,7 @@ class Diagnosa extends CI_Controller {
 	    }
 	    $this->load->library('session');
 	    $this->load->model('indikator_m');
+        $this->load->model('karakteristik_m');
 	    $this->load->model('admin_m');
         $this->load->model('relasi_m');
 	}
@@ -56,12 +57,14 @@ class Diagnosa extends CI_Controller {
 		redirect('Diagnosa/cek');
 	}
 
-    public function cek($jawaban = null, $id= null, $index = 0){
+    public function cek($jawaban = null, $id= null, $index = 0, $kelompok = 1){
         $data['title'] = 'Uji Coba Diagnosa';
         $data['user'] = $this->db->get_where('admin', ['username' => $this->session->userdata('username')])->row_array();
 
         if(is_null($jawaban) && is_null($id)){
-            $data['indikator'] = $this->db->get('indikator')->result_array();
+            
+            $data['indikator'] = $this->db->select('*, CAST(kode_indikator as SIGNED) AS casted_column')->where('kelompok', $kelompok)->order_by('length(kode_indikator)')->order_by('kode_indikator')->get('indikator')->result_array();
+            
             $data['index'] = 0;
         } else {
             $cek = $this->db->get_where('rule_temp', ['pilihan' => $id])->num_rows();
@@ -69,14 +72,237 @@ class Diagnosa extends CI_Controller {
                 $this->db->insert('rule_temp', [
                     'id_periksa'    => $this->session->userdata('id_periksa'),
                     'pilihan'          => $id,
-                    'jawaban'       => $jawaban
+                    'jawaban'       => $jawaban,
+                    'kelompok'  => $kelompok
                 ]); 
             }
+            $cek_kelompok = $this->db->get_where('rule_temp', ['kelompok' => $kelompok])->num_rows();
+            $cek_kelompok_y = $this->db->get_where('rule_temp', ['jawaban' => 'y', 'kelompok' => $kelompok])->num_rows();
+            $index = $index;
+            if($kelompok == 1){
+                $index = $index;
+                if($cek_kelompok == 3){
+                    if($cek_kelompok_y >= 2){
+                        $data['indikator'] = $this->db->select('*, CAST(kode_indikator as SIGNED) AS casted_column')->where('kelompok', 2)->order_by('length(kode_indikator)')->order_by('kode_indikator')->get('indikator')->result_array();
+                    }else{
+                        $data['indikator'] = $this->db->select('*, CAST(kode_indikator as SIGNED) AS casted_column')->where('kelompok', 3)->order_by('length(kode_indikator)')->order_by('kode_indikator')->get('indikator')->result_array();
+                    }
+                    $index = 0;
+                }else{
+                    $data['indikator'] = $this->db->select('*, CAST(kode_indikator as SIGNED) AS casted_column')->where('kelompok', $kelompok)->order_by('length(kode_indikator)')->order_by('kode_indikator')->get('indikator')->result_array();
+                    $index = $index;
+                }
+                
+                $index = $index;
+            }else if($kelompok == 2){
+                $index = $index;
+                if($cek_kelompok == 3){
+                    if($cek_kelompok_y >= 2){
+                        $data['indikator'] = $this->db->select('*, CAST(kode_indikator as SIGNED) AS casted_column')->where('kelompok', 5)->order_by('length(kode_indikator)')->order_by('kode_indikator')->get('indikator')->result_array();
+                    }else{
+                        $data['indikator'] = $this->db->select('*, CAST(kode_indikator as SIGNED) AS casted_column')->where('kelompok', 4)->order_by('length(kode_indikator)')->order_by('kode_indikator')->get('indikator')->result_array();
+                    }
+                    $index = 0;
+                    
+                }else{
+                    $index = $index;
+                    $data['indikator'] = $this->db->select('*, CAST(kode_indikator as SIGNED) AS casted_column')->where('kelompok', $kelompok)->order_by('length(kode_indikator)')->order_by('kode_indikator')->get('indikator')->result_array();
+                }
+            }elseif($kelompok == 3){
+                $index = $index;
+                if($cek_kelompok == 3){
+                    if($cek_kelompok_y >= 2){
+                        $data['indikator'] = $this->db->select('*, CAST(kode_indikator as SIGNED) AS casted_column')->where('kelompok', 4)->order_by('length(kode_indikator)')->order_by('kode_indikator')->get('indikator')->result_array();
+                    }else{
+                        $data['indikator'] = $this->db->select('*, CAST(kode_indikator as SIGNED) AS casted_column')->where('kelompok', 2)->order_by('length(kode_indikator)')->order_by('kode_indikator')->get('indikator')->result_array();
+                    }
+                    $index = 0;
+                }else{
+                    $data['indikator'] = $this->db->select('*, CAST(kode_indikator as SIGNED) AS casted_column')->where('kelompok', $kelompok)->order_by('length(kode_indikator)')->order_by('kode_indikator')->get('indikator')->result_array();
+                    $index = $index;
+                }
+                
+                $index = $index;
+            }else if($kelompok == 4){
+                $index = $index;
+                if($cek_kelompok == 3){
+                    $index = 0;
+                    $data['indikator'] = $this->db->select('*, CAST(kode_indikator as SIGNED) AS casted_column')->where('kelompok', 5)->order_by('length(kode_indikator)')->order_by('kode_indikator')->get('indikator')->result_array();
+                    
+                }else{
+                    $index = $index;
+                    $data['indikator'] = $this->db->select('*, CAST(kode_indikator as SIGNED) AS casted_column')->where('kelompok', $kelompok)->order_by('length(kode_indikator)')->order_by('kode_indikator')->get('indikator')->result_array();
+                }
+            }elseif($kelompok == 5){
+                $index = $index;
+                if($cek_kelompok == 3){
+                    $index = 0;
+                    if($cek_kelompok_y >= 2){
+                        //die();
+                        $index = 0;
+                        $data['indikator'] = $this->db->select('*, CAST(kode_indikator as SIGNED) AS casted_column')->where('kelompok', 6)->order_by('length(kode_indikator)')->order_by('kode_indikator')->get('indikator')->result_array();
+                        
+                    }else{
+                        $index = 0;
+                        $data['indikator'] = $this->db->select('*, CAST(kode_indikator as SIGNED) AS casted_column')->where('kelompok', 7)->order_by('length(kode_indikator)')->order_by('kode_indikator')->get('indikator')->result_array();
+                        
+                    }
+                }else{
+                    $index = $index;
+                    $data['indikator'] = $this->db->select('*, CAST(kode_indikator as SIGNED) AS casted_column')->where('kelompok', $kelompok)->order_by('length(kode_indikator)')->order_by('kode_indikator')->get('indikator')->result_array();
+                }
+            } else if($kelompok == 6){
+                $index = $index;
+                if($cek_kelompok == 3){
+                    if($cek_kelompok_y >= 2){
+                        $data['indikator'] = $this->db->select('*, CAST(kode_indikator as SIGNED) AS casted_column')->where('kelompok', 8)->order_by('length(kode_indikator)')->order_by('kode_indikator')->get('indikator')->result_array();
+                    }else{
+                        $data['indikator'] = $this->db->select('*, CAST(kode_indikator as SIGNED) AS casted_column')->where('kelompok', 9)->order_by('length(kode_indikator)')->order_by('kode_indikator')->get('indikator')->result_array();
+                    }
+                    $index = 0;
+                    
+                }else{
+                    $index = $index;
+                    $data['indikator'] = $this->db->select('*, CAST(kode_indikator as SIGNED) AS casted_column')->where('kelompok', $kelompok)->order_by('length(kode_indikator)')->order_by('kode_indikator')->get('indikator')->result_array();
+                }
+            
+            }elseif($kelompok == 7){
+                $index = $index;
+                if($cek_kelompok == 3){
+                    if($cek_kelompok_y >= 2){
+                        $data['indikator'] = $this->db->select('*, CAST(kode_indikator as SIGNED) AS casted_column')->where('kelompok', 8)->order_by('length(kode_indikator)')->order_by('kode_indikator')->get('indikator')->result_array();
+                    }else{
+                        $data['indikator'] = $this->db->select('*, CAST(kode_indikator as SIGNED) AS casted_column')->where('kelompok', 6)->order_by('length(kode_indikator)')->order_by('kode_indikator')->get('indikator')->result_array();
+                    }
+                    $index = 0;
+                }else{
+                    $data['indikator'] = $this->db->select('*, CAST(kode_indikator as SIGNED) AS casted_column')->where('kelompok', $kelompok)->order_by('length(kode_indikator)')->order_by('kode_indikator')->get('indikator')->result_array();
+                    $index = $index;
+                }
+                
+                $index = $index;
+            }else if($kelompok == 8){
+                $index = $index;
+                if($cek_kelompok == 3){
+                    $index = 0;
+                    $data['indikator'] = $this->db->select('*, CAST(kode_indikator as SIGNED) AS casted_column')->where('kelompok', 9)->order_by('length(kode_indikator)')->order_by('kode_indikator')->get('indikator')->result_array();
+                    
+                }else{
+                    $index = $index;
+                    $data['indikator'] = $this->db->select('*, CAST(kode_indikator as SIGNED) AS casted_column')->where('kelompok', $kelompok)->order_by('length(kode_indikator)')->order_by('kode_indikator')->get('indikator')->result_array();
+                }
+            }elseif($kelompok == 9){
+                $index = $index;
+                if($cek_kelompok == 3){
+                    $index = 0;
+                    if($cek_kelompok_y >= 2){
+                        //die();
+                        $index = 0;
+                        $data['indikator'] = $this->db->select('*, CAST(kode_indikator as SIGNED) AS casted_column')->where('kelompok', 10)->order_by('length(kode_indikator)')->order_by('kode_indikator')->get('indikator')->result_array();
+                        
+                    }else{
+                        $index = 0;
+                        $data['indikator'] = $this->db->select('*, CAST(kode_indikator as SIGNED) AS casted_column')->where('kelompok', 11)->order_by('length(kode_indikator)')->order_by('kode_indikator')->get('indikator')->result_array();
+                        
+                    }
+                }else{
+                    $index = $index;
+                    $data['indikator'] = $this->db->select('*, CAST(kode_indikator as SIGNED) AS casted_column')->where('kelompok', $kelompok)->order_by('length(kode_indikator)')->order_by('kode_indikator')->get('indikator')->result_array();
+                }
+            }else if($kelompok == 10){
+                $index = $index;
+                if($cek_kelompok == 3){
+                    if($cek_kelompok_y >= 2){
+                        $data['indikator'] = $this->db->select('*, CAST(kode_indikator as SIGNED) AS casted_column')->where('kelompok', 12)->order_by('length(kode_indikator)')->order_by('kode_indikator')->get('indikator')->result_array();
+                    }else{
+                        $data['indikator'] = $this->db->select('*, CAST(kode_indikator as SIGNED) AS casted_column')->where('kelompok', 13)->order_by('length(kode_indikator)')->order_by('kode_indikator')->get('indikator')->result_array();
+                    }
+                    $index = 0;
+                    
+                }else{
+                    $index = $index;
+                    $data['indikator'] = $this->db->select('*, CAST(kode_indikator as SIGNED) AS casted_column')->where('kelompok', $kelompok)->order_by('length(kode_indikator)')->order_by('kode_indikator')->get('indikator')->result_array();
+                }
+            
+            }elseif($kelompok == 11){
+                $index = $index;
+                if($cek_kelompok == 3){
+                    if($cek_kelompok_y >= 2){
+                        $data['indikator'] = $this->db->select('*, CAST(kode_indikator as SIGNED) AS casted_column')->where('kelompok', 12)->order_by('length(kode_indikator)')->order_by('kode_indikator')->get('indikator')->result_array();
+                    }else{
+                        $data['indikator'] = $this->db->select('*, CAST(kode_indikator as SIGNED) AS casted_column')->where('kelompok', 10)->order_by('length(kode_indikator)')->order_by('kode_indikator')->get('indikator')->result_array();
+                    }
+                    $index = 0;
+                }else{
+                    $data['indikator'] = $this->db->select('*, CAST(kode_indikator as SIGNED) AS casted_column')->where('kelompok', $kelompok)->order_by('length(kode_indikator)')->order_by('kode_indikator')->get('indikator')->result_array();
+                    $index = $index;
+                }
+                
+                $index = $index;
+            }else if($kelompok == 12){
+                $index = $index;
+                if($cek_kelompok == 3){
+                    $index = 0;
+                    $data['indikator'] = $this->db->select('*, CAST(kode_indikator as SIGNED) AS casted_column')->where('kelompok', 13)->order_by('length(kode_indikator)')->order_by('kode_indikator')->get('indikator')->result_array();
+                    
+                }else{
+                    $index = $index;
+                    $data['indikator'] = $this->db->select('*, CAST(kode_indikator as SIGNED) AS casted_column')->where('kelompok', $kelompok)->order_by('length(kode_indikator)')->order_by('kode_indikator')->get('indikator')->result_array();
+                }
+            }elseif($kelompok == 13){
+                $index = $index;
+                if($cek_kelompok == 3){
+                    $index = 0;
+                    if($cek_kelompok_y >= 2){
+                        //die();
+                        $index = 0;
+                        $data['indikator'] = $this->db->select('*, CAST(kode_indikator as SIGNED) AS casted_column')->where('kelompok', 14)->order_by('length(kode_indikator)')->order_by('kode_indikator')->get('indikator')->result_array();
+                        
+                    }else{
+                        $index = 0;
+                        $data['indikator'] = $this->db->select('*, CAST(kode_indikator as SIGNED) AS casted_column')->where('kelompok', 15)->order_by('length(kode_indikator)')->order_by('kode_indikator')->get('indikator')->result_array();
+                        
+                    }
+                }else{
+                    $index = $index;
+                    $data['indikator'] = $this->db->select('*, CAST(kode_indikator as SIGNED) AS casted_column')->where('kelompok', $kelompok)->order_by('length(kode_indikator)')->order_by('kode_indikator')->get('indikator')->result_array();
+                }
+            }else if($kelompok == 14){
+                $index = $index;
+                if($cek_kelompok == 3){
+                    redirect('Diagnosa/hasil');
+                    
+                }else{
+                    $index = $index;
+                    $data['indikator'] = $this->db->select('*, CAST(kode_indikator as SIGNED) AS casted_column')->where('kelompok', $kelompok)->order_by('length(kode_indikator)')->order_by('kode_indikator')->get('indikator')->result_array();
+                }
+            
+            }elseif($kelompok == 15){
+                $index = $index;
+                if($cek_kelompok == 3){
+                    if($cek_kelompok_y >= 2){
+                        $data['indikator'] = $this->db->select('*, CAST(kode_indikator as SIGNED) AS casted_column')->where('kelompok', 16)->order_by('length(kode_indikator)')->order_by('kode_indikator')->get('indikator')->result_array();
+                    }else{
+                        $data['indikator'] = $this->db->select('*, CAST(kode_indikator as SIGNED) AS casted_column')->where('kelompok', 14)->order_by('length(kode_indikator)')->order_by('kode_indikator')->get('indikator')->result_array();
+                    }
+                    $index = 0;
+                }else{
+                    $data['indikator'] = $this->db->select('*, CAST(kode_indikator as SIGNED) AS casted_column')->where('kelompok', $kelompok)->order_by('length(kode_indikator)')->order_by('kode_indikator')->get('indikator')->result_array();
+                    $index = $index;
+                }
+                
+                $index = $index;
+            }else if($kelompok == 16){
+                $index = $index;
+                if($cek_kelompok == 3){
+                    redirect('Diagnosa/hasil');
+                }else{
+                    $index = $index;
+                    $data['indikator'] = $this->db->select('*, CAST(kode_indikator as SIGNED) AS casted_column')->where('kelompok', $kelompok)->order_by('length(kode_indikator)')->order_by('kode_indikator')->get('indikator')->result_array();
+                }
+            }
+            
             $data['index'] = $index;
-            $data['indikator'] = $this->db->get('indikator')->result_array();
-            if(empty($data['indikator'][$index])){
-                redirect('Diagnosa/hasil');
-            } 
         }
 
         $this->load->view('templates/header', $data);
@@ -90,7 +316,7 @@ class Diagnosa extends CI_Controller {
         $data['title'] = 'Hasil Diagnosa';
         $data['user'] = $this->db->get_where('admin', ['username' => $this->session->userdata('username')])->row_array();
         $data['pertanyaan'] = $this->db->get('rule_temp')->result_array(); 
-
+        
         if(empty($data['pertanyaan'])){
             $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert" >Belum ada diagnosa! Silahkan input data baru.<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
             redirect('Diagnosa');
@@ -98,121 +324,44 @@ class Diagnosa extends CI_Controller {
 
         $id_periksa = $this->session->userdata('id_periksa');
         $rule = $this->db->get_where('rule_temp',[ 'id_periksa' => $id_periksa, 'jawaban' => 'y'])->result_array();
+        $karakteristik = $this->db->select('*')->get('karakteristik')->result_array();
+        $indikator = $this->db->select('*')->get('indikator')->result_array();
 
-        $gej = array();
-        foreach ($rule as $key) {
-            $gej[] = $key['pilihan'];
-        }
-
-        $indikator = $gej;
-
-        $no  = 0;
-        $i = 1;
-        $n = [];
-        // print_r($indikator);echo "</br>";
-        for ($l=0; $l < count($indikator); $l++) { 
-            $m = $this->db->get_where('indikator', [
-                'kode_indikator' => $indikator[$l]
-            ])->row();
-            $n[$l] = $m->nama;
-        }
-        for ($k = 0; $k < count($indikator); $k++) {
-            $this->db->select('relasi.kode_karakteristik, nama'); 
-            $this->db->from('relasi');
-            $this->db->join('karakteristik', 'relasi.kode_karakteristik = karakteristik.kode_karakteristik');
-            $this->db->where('kode_indikator', $indikator[0]);
-            for ($a = 1; $a < count($indikator); $a++) {
-                $this->db->or_where('kode_indikator', $indikator[$a]);    
-            }
-            $b = $this->db->get()->result();
-            $v = [];
-            $no = 0;
-            for ($c=0; $c < count($b); $c++) {
-                if ($c == 0) {
-                  $x = 1;
-                } else {
-                  if ($b[$c]->kode_karakteristik == $b[$c - 1]->kode_karakteristik) {
-                    $x = 0;
-                  } else {
-                    $x = 1;
-                  }
+        $hasil = [];
+        $hasil_num = [];
+        $rule = 1;
+        foreach ($karakteristik as $k) {
+            $relasi = $this->db->query("SELECT * FROM `relasi` WHERE kode_karakteristik='".$k['kode_karakteristik']."' ORDER BY `id_relasi` ASC")->result_array();
+            $num = 0;
+            $hitung = [];
+            foreach ($relasi as $r) {
+                $cek = $this->db->get_where('rule_temp',[ 'id_periksa' => $id_periksa, 'pilihan' => $r['kode_indikator'],  'jawaban' => 'y'])->num_rows();
+                if ($cek > 0) {
+                    $num++;
+                    $a = '<b>'.$r['kode_indikator'].'</b>';
+                }else{
+                    $a = $r['kode_indikator'];
                 }
-                if ($x == 1) {
-                  $v[$no] = $b[$c];
-                  $no++;
-                }
-            }
-            // print_r($v);echo "</br>";
-            if (count($v) == 1) {
-                $kode_karakteristik = $b[0]->kode_karakteristik;
-                //var_dump($kode_karakteristik);
                 
-                $get_tot_indikator = $this->db->get_where('relasi', ['kode_karakteristik' => $kode_karakteristik])->num_rows();
-                //$peluang = count($indikator)/$get_tot_indikator * 100;
-                $peluang = count($indikator);
-                $data['karakteristik'] = $v;
-                $data['peluang'] = $peluang;
-            } else {
-               if ($k == count($indikator) - 1) {
-                    $peluang= array();
-                    for ($z = 0; $z < count($v); $z++) {
-                        $this->db->select('kode_indikator');
-                        $this->db->from('relasi');
-                        $this->db->where('kode_karakteristik', $v[$z]->kode_karakteristik);
-                        $d = $this->db->get()->result_array();
-                        $data1 = array();
-                        for ($s = 0; $s < count($d); $s++) {
-                            $data1[] = $d[$s]['kode_indikator'];
-                        }
-                        $data3 = [];
-                        $q     = 0;
-                        for ($l = 0; $l < count($indikator); $l++) {
-                            $data2  = in_array($indikator[$l], $data1);
-                            if ($data2) {
-                                $data3[$q] = $indikator[$l];
-                                $q++;
-                            }
-                        }
-                        //$peluang[$z] = count($data3) / count($data1) * 100;
-                        $peluang[$z] = count($data3);
-                
-                    }
-                    $data['karakteristik']   = $v;
-                    $data['peluang']    = $peluang;
-                    $data['tertinggi']  = max($peluang);
-                } else {
-                    $i++;    
-                } 
+                array_push($hitung, $a);
             }
+            $data = [
+                'rule' => 'R'.$rule++,
+                'kode_karakteristik' => $k['kode_karakteristik'],
+                'nama_karakteristik' => $k['nama'],
+                'hitung' => $hitung,
+                'presentase' => $num,
+            ];
+            array_push($hasil_num, $num);
+            array_push($hasil, $data);
         }
-
-        $karakteristik_terpilih = array();
-        $peluang_terpilih = array();
-        for ($i=0; $i < count($data['karakteristik']); $i++) {
-            if (is_array($data['peluang'])) {
-                 $peluang = $data['peluang'][$i];
-                 
-             } else {
-                 $peluang = $data['peluang'];
-             }
-             $peluang_terpilih[] = $peluang;
-            $karakteristik_terpilih[] = $data['karakteristik'][$i]->kode_karakteristik; 
-        }     
-
-        $max_peluang = max($peluang_terpilih);
-        $index = array_search($max_peluang, $peluang_terpilih);
-        $id_periksa = $this->session->userdata('id_periksa');
-        $kode_karakteristik = $karakteristik_terpilih[$index];
-        $cek_id = $this->db->get_where('hasil', ['id_periksa' => $id_periksa])->num_rows();
-
-        if($cek_id == 0){
-            $hasil_uji_coba = array(
-                'kode_karakteristik' => $kode_karakteristik,
-            );
-
-            $this->session->set_userdata($hasil_uji_coba); 
-        }
-        $data['karakteristik'] = $this->db->get_where('karakteristik', ['kode_karakteristik' => $kode_karakteristik])->row_array(); 
+        //var_dump($hasil);
+        $data['title'] = 'Hasil Diagnosa';
+        $data['user'] = $this->db->get_where('admin', ['username' => $this->session->userdata('username')])->row_array();
+        $data['pertanyaan'] = $this->db->get('rule_temp')->result_array(); 
+        $data['hasil'] = $hasil;
+        $data['hasil_terpilih'] = max($hasil_num);
+        $data['index_terpilih'] = array_search(max($hasil_num), $hasil_num);
 
         $this->load->view('templates/header', $data);
         $this->load->view('templates/sidebar', $data);
@@ -225,11 +374,11 @@ class Diagnosa extends CI_Controller {
         if($id_periksa == null){
             $id_periksa = $this->session->userdata('id_periksa');
         }
-        //$data['pasien'] = $this->db->get_where('pasien', ['id_periksa' => $id_periksa])->row_array();
+
         $data['title'] = 'Hasil Diagnosa';
         $data['user'] = $this->db->get_where('admin', ['username' => $this->session->userdata('username')])->row_array();
         $data['pertanyaan'] = $this->db->get('rule_temp')->result_array(); 
-
+        
         if(empty($data['pertanyaan'])){
             $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert" >Belum ada diagnosa! Silahkan input data baru.<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
             redirect('Diagnosa');
@@ -237,121 +386,46 @@ class Diagnosa extends CI_Controller {
 
         $id_periksa = $this->session->userdata('id_periksa');
         $rule = $this->db->get_where('rule_temp',[ 'id_periksa' => $id_periksa, 'jawaban' => 'y'])->result_array();
-
-        $gej = array();
-        foreach ($rule as $key) {
-            $gej[] = $key['pilihan'];
-        }
-
-        $indikator = $gej;
-
-        $no  = 0;
-        $i = 1;
-        $n = [];
-        // print_r($indikator);echo "</br>";
-        for ($l=0; $l < count($indikator); $l++) { 
-            $m = $this->db->get_where('indikator', [
-                'kode_indikator' => $indikator[$l]
-            ])->row();
-            $n[$l] = $m->nama;
-        }
-        for ($k = 0; $k < count($indikator); $k++) {
-            $this->db->select('relasi.kode_karakteristik, nama'); 
-            $this->db->from('relasi');
-            $this->db->join('karakteristik', 'relasi.kode_karakteristik = karakteristik.kode_karakteristik');
-            $this->db->where('kode_indikator', $indikator[0]);
-            for ($a = 1; $a < count($indikator); $a++) {
-                $this->db->or_where('kode_indikator', $indikator[$a]);    
-            }
-            $b = $this->db->get()->result();
-            $v = [];
-            $no = 0;
-            for ($c=0; $c < count($b); $c++) {
-                if ($c == 0) {
-                  $x = 1;
-                } else {
-                  if ($b[$c]->kode_karakteristik == $b[$c - 1]->kode_karakteristik) {
-                    $x = 0;
-                  } else {
-                    $x = 1;
-                  }
+        $karakteristik = $this->db->select('*')->get('karakteristik')->result_array();
+        $indikator = $this->db->select('*')->get('indikator')->result_array();
+        //var_dump($karakteristik);
+        echo '<br>';
+        echo '<br>';
+        $hasil = [];
+        $hasil_num = [];
+        $rule = 1;
+        foreach ($karakteristik as $k) {
+            $relasi = $this->db->query("SELECT * FROM `relasi` WHERE kode_karakteristik='".$k['kode_karakteristik']."' ORDER BY `id_relasi` ASC")->result_array();
+            $num = 0;
+            $hitung = [];
+            foreach ($relasi as $r) {
+                $cek = $this->db->get_where('rule_temp',[ 'id_periksa' => $id_periksa, 'pilihan' => $r['kode_indikator'],  'jawaban' => 'y'])->num_rows();
+                if ($cek > 0) {
+                    $num++;
+                    $a = '<b>'.$r['kode_indikator'].'</b>';
+                }else{
+                    $a = $r['kode_indikator'];
                 }
-                if ($x == 1) {
-                  $v[$no] = $b[$c];
-                  $no++;
-                }
-            }
-            // print_r($v);echo "</br>";
-            if (count($v) == 1) {
-                $kode_karakteristik = $b[0]->kode_karakteristik;
-                var_dump($kode_karakteristik);
                 
-                $get_tot_indikator = $this->db->get_where('relasi', ['kode_karakteristik' => $kode_karakteristik])->num_rows();
-                //$peluang = count($indikator)/$get_tot_indikator * 100;
-                $peluang = count($indikator);
-                $data['karakteristik'] = $v;
-                $data['peluang'] = $peluang;
-            } else {
-               if ($k == count($indikator) - 1) {
-                    $peluang= array();
-                    for ($z = 0; $z < count($v); $z++) {
-                        $this->db->select('kode_indikator');
-                        $this->db->from('relasi');
-                        $this->db->where('kode_karakteristik', $v[$z]->kode_karakteristik);
-                        $d = $this->db->get()->result_array();
-                        $data1 = array();
-                        for ($s = 0; $s < count($d); $s++) {
-                            $data1[] = $d[$s]['kode_indikator'];
-                        }
-                        $data3 = [];
-                        $q     = 0;
-                        for ($l = 0; $l < count($indikator); $l++) {
-                            $data2  = in_array($indikator[$l], $data1);
-                            if ($data2) {
-                                $data3[$q] = $indikator[$l];
-                                $q++;
-                            }
-                        }
-                        //$peluang[$z] = count($data3) / count($data1) * 100;
-                        $peluang[$z] = count($data3);
-                
-                    }
-                    $data['karakteristik']   = $v;
-                    $data['peluang']    = $peluang;
-                    $data['tertinggi']  = max($peluang);
-                } else {
-                    $i++;    
-                } 
+                array_push($hitung, $a);
             }
+            $data = [
+                'rule' => 'R'.$rule++,
+                'kode_karakteristik' => $k['kode_karakteristik'],
+                'nama_karakteristik' => $k['nama'],
+                'hitung' => $hitung,
+                'presentase' => $num,
+            ];
+            array_push($hasil_num, $num);
+            array_push($hasil, $data);
         }
-
-        $karakteristik_terpilih = array();
-        $peluang_terpilih = array();
-        for ($i=0; $i < count($data['karakteristik']); $i++) {
-            if (is_array($data['peluang'])) {
-                 $peluang = $data['peluang'][$i];
-                 
-             } else {
-                 $peluang = $data['peluang'];
-                 
-             }
-             $peluang_terpilih[] = $peluang;
-            $karakteristik_terpilih[] = $data['karakteristik'][$i]->kode_karakteristik; 
-        }     
-
-        $max_peluang = max($peluang_terpilih);
-        $index = array_search($max_peluang, $peluang_terpilih);
-        $id_periksa = $this->session->userdata('id_periksa');
-        $kode_karakteristik = $karakteristik_terpilih[$index];
-        $cek_id = $this->db->get_where('hasil', ['id_periksa' => $id_periksa])->num_rows();
-        if($cek_id == 0){
-           $hasil_uji_coba = array(
-                'kode_karakteristik' => $kode_karakteristik,
-            );
-
-            $this->session->set_userdata($hasil_uji_coba); 
-        }
-        $data['karakteristik'] = $this->db->get_where('karakteristik', ['kode_karakteristik' => $kode_karakteristik])->row_array(); 
+        //var_dump($hasil);
+        $data['title'] = 'Hasil Diagnosa';
+        $data['user'] = $this->db->get_where('admin', ['username' => $this->session->userdata('username')])->row_array();
+        $data['pertanyaan'] = $this->db->get('rule_temp')->result_array(); 
+        $data['hasil'] = $hasil;
+        $data['hasil_terpilih'] = max($hasil_num);
+        $data['index_terpilih'] = array_search(max($hasil_num), $hasil_num);
 
         $this->load->view('templates/header', $data);
         $this->load->view('templates/topbar', $data);
