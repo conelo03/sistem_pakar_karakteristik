@@ -439,54 +439,103 @@ class HalamanUser extends CI_Controller {
         }
 
         $id_periksa = $this->session->userdata('id_periksa');
-        $rule = $this->db->get_where('rule_temp',[ 'id_periksa' => $id_periksa, 'jawaban' => 'y'])->result_array();
-        $karakteristik = $this->db->select('*')->get('karakteristik')->result_array();
-        $indikator = $this->db->select('*')->get('indikator')->result_array();
 
-        $hasil = [];
-        $hasil_num = [];
-        $rule = 1;
-        foreach ($karakteristik as $k) {
-            $relasi = $this->db->query("SELECT * FROM `relasi` WHERE kode_karakteristik='".$k['kode_karakteristik']."' ORDER BY `id_relasi` ASC")->result_array();
-            $num = 0;
-            $hitung = [];
-            foreach ($relasi as $r) {
-                $cek = $this->db->get_where('rule_temp',[ 'id_periksa' => $id_periksa, 'pilihan' => $r['kode_indikator'],  'jawaban' => 'y'])->num_rows();
-                if ($cek > 0) {
-                    $num++;
-                    $a = '<b>'.$r['kode_indikator'].'</b>';
-                }else{
-                    $a = $r['kode_indikator'];
-                }
-                
-                array_push($hitung, $a);
+        // begin
+        // Pengelompokan jawaban user berdasarkan kelompok pertanyaan
+        $k = array('x');
+        for ($i=1; $i <= 16; $i++) { 
+            // cek jawaban berdasarkan kelompok
+            $cek_jawaban = $this->db->get_where('rule_temp',[ 'id_periksa' => $id_periksa, 'jawaban' => 'y', 'kelompok' => $i])->num_rows();
+            // jika jawaban yg 'ya' ada lebih dari samadengan 2, maka kelompok tersebut 'y'
+            if($cek_jawaban >= 2){
+                array_push($k, 'y');
+            } else {
+                array_push($k, 'n');
             }
-            $data = [
-                'rule' => 'R'.$rule++,
-                'kode_karakteristik' => $k['kode_karakteristik'],
-                'nama_karakteristik' => $k['nama'],
-                'hitung' => $hitung,
-                'presentase' => $num,
-            ];
-            array_push($hasil_num, $num);
-            array_push($hasil, $data);
         }
-        //var_dump($hasil);
+        
+        $hasil = '';
+        if($k[1] == 'y' && $k[2] == 'y' && $k[5] == 'y' && $k[6] == 'y' && $k[9] == 'y' && $k[10] == 'y' && $k[13] == 'y' && $k[14] == 'y'){
+            $hasil = 'ESTJ';
+        }else if($k[1] == 'y' && $k[2] == 'y' && $k[5] == 'y' && $k[6] == 'y' && $k[9] == 'y' && $k[10] == 'y' && $k[15] == 'y' && $k[16] == 'y'){
+            $hasil = 'ESTP';
+        }else if($k[1] == 'y' && $k[2] == 'y' && $k[5] == 'y' && $k[6] == 'y' && $k[11] == 'y' && $k[12] == 'y' && $k[13] == 'y' && $k[14] == 'y'){
+            $hasil = 'ESFJ';
+        }else if($k[1] == 'y' && $k[2] == 'y' && $k[5] == 'y' && $k[6] == 'y' && $k[11] == 'y' && $k[12] == 'y' && $k[15] == 'y' && $k[16] == 'y'){
+            $hasil = 'ESFP';
+        }else if($k[1] == 'y' && $k[2] == 'y' && $k[7] == 'y' && $k[8] == 'y' && $k[11] == 'y' && $k[12] == 'y' && $k[13] == 'y' && $k[14] == 'y'){
+            $hasil = 'ENFJ';
+        }else if($k[1] == 'y' && $k[2] == 'y' && $k[7] == 'y' && $k[8] == 'y' && $k[11] == 'y' && $k[12] == 'y' && $k[15] == 'y' && $k[16] == 'y'){
+            $hasil = 'ENFP';
+        }else if($k[1] == 'y' && $k[2] == 'y' && $k[7] == 'y' && $k[8] == 'y' && $k[9] == 'y' && $k[10] == 'y' && $k[15] == 'y' && $k[16] == 'y'){
+            $hasil = 'ENTP';
+        }else if($k[1] == 'y' && $k[2] == 'y' && $k[7] == 'y' && $k[8] == 'y' && $k[9] == 'y' && $k[10] == 'y' && $k[13] == 'y' && $k[14] == 'y'){
+            $hasil = 'ENTJ';
+        }else if($k[3] == 'y' && $k[4] == 'y' && $k[5] == 'y' && $k[6] == 'y' && $k[9] == 'y' && $k[10] == 'y' && $k[15] == 'y' && $k[16] == 'y'){
+            $hasil = 'ISTP';
+        }else if($k[3] == 'y' && $k[4] == 'y' && $k[5] == 'y' && $k[6] == 'y' && $k[9] == 'y' && $k[10] == 'y' && $k[13] == 'y' && $k[14] == 'y'){
+            $hasil = 'ISTJ';
+        }else if($k[3] == 'y' && $k[4] == 'y' && $k[5] == 'y' && $k[6] == 'y' && $k[11] == 'y' && $k[12] == 'y' && $k[13] == 'y' && $k[14] == 'y'){
+            $hasil = 'ISFJ';
+        }else if($k[3] == 'y' && $k[4] == 'y' && $k[5] == 'y' && $k[6] == 'y' && $k[11] == 'y' && $k[12] == 'y' && $k[15] == 'y' && $k[16] == 'y'){
+            $hasil = 'ISFP';
+        }else if($k[3] == 'y' && $k[4] == 'y' && $k[7] == 'y' && $k[8] == 'y' && $k[11] == 'y' && $k[12] == 'y' && $k[13] == 'y' && $k[14] == 'y'){
+            $hasil = 'INFJ';
+        }else if($k[3] == 'y' && $k[4] == 'y' && $k[7] == 'y' && $k[8] == 'y' && $k[11] == 'y' && $k[12] == 'y' && $k[15] == 'y' && $k[16] == 'y'){
+            $hasil = 'INFP';
+        }else if($k[3] == 'y' && $k[4] == 'y' && $k[7] == 'y' && $k[8] == 'y' && $k[9] == 'y' && $k[10] == 'y' && $k[15] == 'y' && $k[16] == 'y'){
+            $hasil = 'INTP';
+        }else if($k[3] == 'y' && $k[4] == 'y' && $k[7] == 'y' && $k[8] == 'y' && $k[9] == 'y' && $k[10] == 'y' && $k[13] == 'y' && $k[14] == 'y'){
+            $hasil = 'INTJ';
+        }
+        // END
+
+        // $rule = $this->db->get_where('rule_temp',[ 'id_periksa' => $id_periksa, 'jawaban' => 'y'])->result_array();
+        // $karakteristik = $this->db->select('*')->get('karakteristik')->result_array();
+        // $indikator = $this->db->select('*')->get('indikator')->result_array();
+
+        // $hasil = [];
+        // $hasil_num = [];
+        // $rule = 1;
+        // foreach ($karakteristik as $k) {
+        //     $relasi = $this->db->query("SELECT * FROM `relasi` WHERE kode_karakteristik='".$k['kode_karakteristik']."' ORDER BY `id_relasi` ASC")->result_array();
+        //     $num = 0;
+        //     $hitung = [];
+        //     foreach ($relasi as $r) {
+        //         $cek = $this->db->get_where('rule_temp',[ 'id_periksa' => $id_periksa, 'pilihan' => $r['kode_indikator'],  'jawaban' => 'y'])->num_rows();
+        //         if ($cek > 0) {
+        //             $num++;
+        //             $a = '<b>'.$r['kode_indikator'].'</b>';
+        //         }else{
+        //             $a = $r['kode_indikator'];
+        //         }
+                
+        //         array_push($hitung, $a);
+        //     }
+        //     $data = [
+        //         'rule' => 'R'.$rule++,
+        //         'kode_karakteristik' => $k['kode_karakteristik'],
+        //         'nama_karakteristik' => $k['nama'],
+        //         'hitung' => $hitung,
+        //         'presentase' => $num,
+        //     ];
+        //     array_push($hasil_num, $num);
+        //     array_push($hasil, $data);
+        // }
+
         $data['title'] = 'Hasil Diagnosa';
         $data['user'] = $this->db->get_where('admin', ['username' => $this->session->userdata('username')])->row_array();
         $data['pertanyaan'] = $this->db->get('rule_temp')->result_array(); 
         $data['hasil'] = $hasil;
-        $data['hasil_terpilih'] = max($hasil_num);
-        $data['index_terpilih'] = array_search(max($hasil_num), $hasil_num);
         $cek_id = $this->db->get_where('hasil', ['id_periksa' => $id_periksa])->num_rows();
+        $data['karakteristik'] = $this->db->get_where('karakteristik', ['deskripsi' => $hasil])->row_array(); 
         if($cek_id == 0){
             $this->db->insert('hasil', [
                 'id_periksa'    => $id_periksa,
-                'kode_karakteristik' => $data['hasil'][$data['index_terpilih']]['kode_karakteristik'],
+                'kode_karakteristik' => $data['karakteristik']['kode_karakteristik'],
             ]); 
         }
-        $data['karakteristik'] = $this->db->get_where('karakteristik', ['kode_karakteristik' => $data['hasil'][$data['index_terpilih']]['kode_karakteristik']])->row_array(); 
-
+        
         $this->load->view('depan/hasil_diagnosa', $data);
     }
 
@@ -504,48 +553,97 @@ class HalamanUser extends CI_Controller {
         }
 
         $id_periksa = $this->session->userdata('id_periksa');
-        $rule = $this->db->get_where('rule_temp',[ 'id_periksa' => $id_periksa, 'jawaban' => 'y'])->result_array();
-        $karakteristik = $this->db->select('*')->get('karakteristik')->result_array();
-        $indikator = $this->db->select('*')->get('indikator')->result_array();
 
-        $hasil = [];
-        $hasil_num = [];
-        $rule = 1;
-        foreach ($karakteristik as $k) {
-            $relasi = $this->db->query("SELECT * FROM `relasi` WHERE kode_karakteristik='".$k['kode_karakteristik']."' ORDER BY `id_relasi` ASC")->result_array();
-            $num = 0;
-            $hitung = [];
-            foreach ($relasi as $r) {
-                $cek = $this->db->get_where('rule_temp',[ 'id_periksa' => $id_periksa, 'pilihan' => $r['kode_indikator'],  'jawaban' => 'y'])->num_rows();
-                if ($cek > 0) {
-                    $num++;
-                    $a = '<b>'.$r['kode_indikator'].'</b>';
-                }else{
-                    $a = $r['kode_indikator'];
-                }
-                
-                array_push($hitung, $a);
+        // begin
+        // Pengelompokan jawaban user berdasarkan kelompok pertanyaan
+        $k = array('x');
+        for ($i=1; $i <= 16; $i++) { 
+            // cek jawaban berdasarkan kelompok
+            $cek_jawaban = $this->db->get_where('rule_temp',[ 'id_periksa' => $id_periksa, 'jawaban' => 'y', 'kelompok' => $i])->num_rows();
+            // jika jawaban yg 'ya' ada lebih dari samadengan 2, maka kelompok tersebut 'y'
+            if($cek_jawaban >= 2){
+                array_push($k, 'y');
+            } else {
+                array_push($k, 'n');
             }
-            $data = [
-                'rule' => 'R'.$rule++,
-                'kode_karakteristik' => $k['kode_karakteristik'],
-                'nama_karakteristik' => $k['nama'],
-                'hitung' => $hitung,
-                'presentase' => $num,
-            ];
-            array_push($hasil_num, $num);
-            array_push($hasil, $data);
         }
+        
+        $hasil = '';
+        if($k[1] == 'y' && $k[2] == 'y' && $k[5] == 'y' && $k[6] == 'y' && $k[9] == 'y' && $k[10] == 'y' && $k[13] == 'y' && $k[14] == 'y'){
+            $hasil = 'ESTJ';
+        }else if($k[1] == 'y' && $k[2] == 'y' && $k[5] == 'y' && $k[6] == 'y' && $k[9] == 'y' && $k[10] == 'y' && $k[15] == 'y' && $k[16] == 'y'){
+            $hasil = 'ESTP';
+        }else if($k[1] == 'y' && $k[2] == 'y' && $k[5] == 'y' && $k[6] == 'y' && $k[11] == 'y' && $k[12] == 'y' && $k[13] == 'y' && $k[14] == 'y'){
+            $hasil = 'ESFJ';
+        }else if($k[1] == 'y' && $k[2] == 'y' && $k[5] == 'y' && $k[6] == 'y' && $k[11] == 'y' && $k[12] == 'y' && $k[15] == 'y' && $k[16] == 'y'){
+            $hasil = 'ESFP';
+        }else if($k[1] == 'y' && $k[2] == 'y' && $k[7] == 'y' && $k[8] == 'y' && $k[11] == 'y' && $k[12] == 'y' && $k[13] == 'y' && $k[14] == 'y'){
+            $hasil = 'ENFJ';
+        }else if($k[1] == 'y' && $k[2] == 'y' && $k[7] == 'y' && $k[8] == 'y' && $k[11] == 'y' && $k[12] == 'y' && $k[15] == 'y' && $k[16] == 'y'){
+            $hasil = 'ENFP';
+        }else if($k[1] == 'y' && $k[2] == 'y' && $k[7] == 'y' && $k[8] == 'y' && $k[9] == 'y' && $k[10] == 'y' && $k[15] == 'y' && $k[16] == 'y'){
+            $hasil = 'ENTP';
+        }else if($k[1] == 'y' && $k[2] == 'y' && $k[7] == 'y' && $k[8] == 'y' && $k[9] == 'y' && $k[10] == 'y' && $k[13] == 'y' && $k[14] == 'y'){
+            $hasil = 'ENTJ';
+        }else if($k[3] == 'y' && $k[4] == 'y' && $k[5] == 'y' && $k[6] == 'y' && $k[9] == 'y' && $k[10] == 'y' && $k[15] == 'y' && $k[16] == 'y'){
+            $hasil = 'ISTP';
+        }else if($k[3] == 'y' && $k[4] == 'y' && $k[5] == 'y' && $k[6] == 'y' && $k[9] == 'y' && $k[10] == 'y' && $k[13] == 'y' && $k[14] == 'y'){
+            $hasil = 'ISTJ';
+        }else if($k[3] == 'y' && $k[4] == 'y' && $k[5] == 'y' && $k[6] == 'y' && $k[11] == 'y' && $k[12] == 'y' && $k[13] == 'y' && $k[14] == 'y'){
+            $hasil = 'ISFJ';
+        }else if($k[3] == 'y' && $k[4] == 'y' && $k[5] == 'y' && $k[6] == 'y' && $k[11] == 'y' && $k[12] == 'y' && $k[15] == 'y' && $k[16] == 'y'){
+            $hasil = 'ISFP';
+        }else if($k[3] == 'y' && $k[4] == 'y' && $k[7] == 'y' && $k[8] == 'y' && $k[11] == 'y' && $k[12] == 'y' && $k[13] == 'y' && $k[14] == 'y'){
+            $hasil = 'INFJ';
+        }else if($k[3] == 'y' && $k[4] == 'y' && $k[7] == 'y' && $k[8] == 'y' && $k[11] == 'y' && $k[12] == 'y' && $k[15] == 'y' && $k[16] == 'y'){
+            $hasil = 'INFP';
+        }else if($k[3] == 'y' && $k[4] == 'y' && $k[7] == 'y' && $k[8] == 'y' && $k[9] == 'y' && $k[10] == 'y' && $k[15] == 'y' && $k[16] == 'y'){
+            $hasil = 'INTP';
+        }else if($k[3] == 'y' && $k[4] == 'y' && $k[7] == 'y' && $k[8] == 'y' && $k[9] == 'y' && $k[10] == 'y' && $k[13] == 'y' && $k[14] == 'y'){
+            $hasil = 'INTJ';
+        }
+        // END
+
+        // $rule = $this->db->get_where('rule_temp',[ 'id_periksa' => $id_periksa, 'jawaban' => 'y'])->result_array();
+        // $karakteristik = $this->db->select('*')->get('karakteristik')->result_array();
+        // $indikator = $this->db->select('*')->get('indikator')->result_array();
+
+        // $hasil = [];
+        // $hasil_num = [];
+        // $rule = 1;
+        // foreach ($karakteristik as $k) {
+        //     $relasi = $this->db->query("SELECT * FROM `relasi` WHERE kode_karakteristik='".$k['kode_karakteristik']."' ORDER BY `id_relasi` ASC")->result_array();
+        //     $num = 0;
+        //     $hitung = [];
+        //     foreach ($relasi as $r) {
+        //         $cek = $this->db->get_where('rule_temp',[ 'id_periksa' => $id_periksa, 'pilihan' => $r['kode_indikator'],  'jawaban' => 'y'])->num_rows();
+        //         if ($cek > 0) {
+        //             $num++;
+        //             $a = '<b>'.$r['kode_indikator'].'</b>';
+        //         }else{
+        //             $a = $r['kode_indikator'];
+        //         }
+                
+        //         array_push($hitung, $a);
+        //     }
+        //     $data = [
+        //         'rule' => 'R'.$rule++,
+        //         'kode_karakteristik' => $k['kode_karakteristik'],
+        //         'nama_karakteristik' => $k['nama'],
+        //         'hitung' => $hitung,
+        //         'presentase' => $num,
+        //     ];
+        //     array_push($hasil_num, $num);
+        //     array_push($hasil, $data);
+        // }
         //var_dump($hasil);
         $data['title'] = 'Hasil Diagnosa';
         $data['pasien'] = $this->db->get_where('pasien', ['id_periksa' => $id_periksa])->row_array();
         $data['user'] = $this->db->get_where('admin', ['username' => $this->session->userdata('username')])->row_array();
         $data['pertanyaan'] = $this->db->get('rule_temp')->result_array(); 
         $data['hasil'] = $hasil;
-        $data['hasil_terpilih'] = max($hasil_num);
-        $data['index_terpilih'] = array_search(max($hasil_num), $hasil_num);
         
-        $data['karakteristik'] = $this->db->get_where('karakteristik', ['kode_karakteristik' => $data['hasil'][$data['index_terpilih']]['kode_karakteristik']])->row_array(); 
+        $data['karakteristik'] = $this->db->get_where('karakteristik', ['deskripsi' => $hasil])->row_array(); 
         
 
         $this->load->view('depan/cetak_diagnosa', $data);

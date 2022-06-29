@@ -57,7 +57,7 @@
                   </div>
                 </div>
 
-                <div class="form-group">
+                <!-- <div class="form-group">
                   <div class="form-user">
                     Perhitungan : 
                   </div>
@@ -74,15 +74,14 @@
                   </div>
                         
                    
-                </div>
+                </div> -->
 
                 <div class="form-group">
                   <div class="form-user">
                     Hasil : 
                   </div>
                   <div class="form-user">
-                    Dengan demikian hasil terbesar terdapat pada <?= $hasil[$index_terpilih]['rule'] ?> dengan nilai <?= $hasil[$index_terpilih]['presentase']/24*100 ?>%, maka hasil diagnosa menyatakan user mempunyai tipe kepribadian
-                    <?= $hasil[$index_terpilih]['nama_karakteristik'] ?>
+                    Dengan demikian hasilnya adalah terdapat pada <?= $hasil ?>
                   </div>
                         
                    
