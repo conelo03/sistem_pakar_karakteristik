@@ -378,6 +378,8 @@ class Diagnosa extends CI_Controller {
             $hasil = 'INTP';
         }else if($k[3] == 'y' && $k[4] == 'y' && $k[7] == 'y' && $k[8] == 'y' && $k[9] == 'y' && $k[10] == 'y' && $k[13] == 'y' && $k[14] == 'y'){
             $hasil = 'INTJ';
+        }else{
+            $hasil = 'Data Tidak Ditemukan';
         }
         // END
 
@@ -485,6 +487,8 @@ class Diagnosa extends CI_Controller {
             $hasil = 'INTP';
         }else if($k[3] == 'y' && $k[4] == 'y' && $k[7] == 'y' && $k[8] == 'y' && $k[9] == 'y' && $k[10] == 'y' && $k[13] == 'y' && $k[14] == 'y'){
             $hasil = 'INTJ';
+        }else{
+            $hasil = 'Data Tidak Ditemukan';
         }
         // END
 

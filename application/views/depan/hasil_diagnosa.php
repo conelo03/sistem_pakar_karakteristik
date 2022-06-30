@@ -22,29 +22,33 @@
                     Hasil : 
                   </div>
                   <div class="form-user">
-                    Dengan demikian hasilnya adalah <?= $hasil ?>
+                    <?= $hasil == 'Data Tidak Ditemukan' ? $hasil : 'Dengan demikian hasil nya adalah '.$hasil ?>
                   </div>
                         
                    
               </div>
+              <?php
+                if(count($karakteristik) != 0){ ?>
+                  <div class="form-group">
+                    <div class="form-user">
+                      Karakter :
+                    </div>
+                    <div class="form-user">
+                      <?= $karakteristik['nama'] ?>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <div class="form-user">
+                      Deskripsi :
+                    </div>
+                    <div class="form-user">
+                      <?= $karakteristik['solusi'] ?>
+                    </div>
 
-              <div class="form-group">
-                <div class="form-user">
-                  Karakter :
-                </div>
-                <div class="form-user">
-                  <?= $karakteristik['nama'] ?>
-                </div>
-              </div>
-              <div class="form-group">
-                <div class="form-user">
-                  Deskripsi :
-                </div>
-                <div class="form-user">
-                  <?= $karakteristik['solusi'] ?>
-                </div>
-
-              </div>
+                  </div>
+              <?php  }
+              ?>
+              
 
 
             </form>

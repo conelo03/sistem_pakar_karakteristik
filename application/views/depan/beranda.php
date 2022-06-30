@@ -40,7 +40,7 @@
           <br><br><br><br><br>
           <h3>Apa itu Karakteristik?</h3>
           <hr class="my-4">
-          <a class="btn btn-outline-dark" href="<?php echo base_url("HalamanUser/tingkat_kecemasan") ?>" role="button">CEK DISINI</a>
+          <a class="btn btn-outline-dark" href="<?php echo base_url("HalamanUser/karakteristik") ?>" role="button">CEK DISINI</a>
         </div>
       </div>
     </div>

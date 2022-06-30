@@ -487,6 +487,8 @@ class HalamanUser extends CI_Controller {
             $hasil = 'INTP';
         }else if($k[3] == 'y' && $k[4] == 'y' && $k[7] == 'y' && $k[8] == 'y' && $k[9] == 'y' && $k[10] == 'y' && $k[13] == 'y' && $k[14] == 'y'){
             $hasil = 'INTJ';
+        }else{
+            $hasil = 'Data Tidak Ditemukan';
         }
         // END
 
@@ -530,10 +532,12 @@ class HalamanUser extends CI_Controller {
         $cek_id = $this->db->get_where('hasil', ['id_periksa' => $id_periksa])->num_rows();
         $data['karakteristik'] = $this->db->get_where('karakteristik', ['deskripsi' => $hasil])->row_array(); 
         if($cek_id == 0){
-            $this->db->insert('hasil', [
-                'id_periksa'    => $id_periksa,
-                'kode_karakteristik' => $data['karakteristik']['kode_karakteristik'],
-            ]); 
+            if(count($data['karakteristik']) != 0){
+                $this->db->insert('hasil', [
+                    'id_periksa'    => $id_periksa,
+                    'kode_karakteristik' => $data['karakteristik']['kode_karakteristik'],
+                ]); 
+            }
         }
         
         $this->load->view('depan/hasil_diagnosa', $data);
@@ -601,6 +605,8 @@ class HalamanUser extends CI_Controller {
             $hasil = 'INTP';
         }else if($k[3] == 'y' && $k[4] == 'y' && $k[7] == 'y' && $k[8] == 'y' && $k[9] == 'y' && $k[10] == 'y' && $k[13] == 'y' && $k[14] == 'y'){
             $hasil = 'INTJ';
+        }else{
+            $hasil = 'Data Tidak Ditemukan';
         }
         // END
 
