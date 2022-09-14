@@ -35,7 +35,7 @@
             <div class="col-lg-12">
               <div class="p-5">
                 <div class="text-center">
-                  <h1 class="h4 text-gray-900 mb-4">SISTEM PAKAR TES MBTI</h1>
+                  <h1 class="h4 text-gray-900 mb-4">SISTEM PAKAR KARAKTERISTIK</h1>
                 </div>
                 <div class="text-center">
                   <h2 class="h4 text-gray-900 mb-4">Hasil Diagnosa</h1>
@@ -44,19 +44,19 @@
                   <div class="form-group row">
                     <label for="staticEmail" class="col-sm-2 col-form-label">Nama</label>
                     <div class="col-sm-10">
-                      <input type="text" name="nama" class="form-control form-control-user" id="exampleInputEmail" placeholder="Masukan Nama" required value="<?= $riwayat['nama']; ?>" disabled>
+                      <input type="text" name="nama" class="form-control form-control-user" id="exampleInputEmail" placeholder="Masukan Nama" required value="<?= $pasien['nama']; ?>" disabled>
                     </div>
                   </div>
                   <div class="form-group row">
                     <label for="staticEmail" class="col-sm-2 col-form-label">Jenis Kelamin</label>
                     <div class="col-sm-10">
-                      <input type="text" name="nama" class="form-control form-control-user" id="exampleInputEmail" placeholder="Masukan Nama" required value="<?= $riwayat['jenis_kelamin']; ?>" disabled>
+                      <input type="text" name="nama" class="form-control form-control-user" id="exampleInputEmail" placeholder="Masukan Nama" required value="<?= $pasien['jenis_kelamin']; ?>" disabled>
                     </div>
                   </div>
                   <div class="form-group row">
                     <label for="staticEmail" class="col-sm-2 col-form-label">Alamat</label>
                     <div class="col-sm-10">
-                      <input type="text" name="alamat" class="form-control form-control-user" id="exampleInputEmail" placeholder="Masukan Alamat" required value="<?= $riwayat['alamat']; ?>" disabled>
+                      <input type="text" name="alamat" class="form-control form-control-user" id="exampleInputEmail" placeholder="Masukan Alamat" required value="<?= $pasien['alamat']; ?>" disabled>
                     </div>
                   </div>
                   <div class="form-group row">
@@ -77,7 +77,7 @@
                         Hasil : 
                       </div>
                       <div class="form-user">
-                        <?= $hasil == 'Data Tidak Ditemukan' ? $hasil : 'Dengan demikian hasil tes anda adalah '.$hasil ?>
+                        Dengan demikian hasilnya adalah <?= $hasil ?>
                       </div>
                             
                       

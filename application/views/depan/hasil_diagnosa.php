@@ -22,7 +22,7 @@
                     Hasil : 
                   </div>
                   <div class="form-user">
-                    <?= $hasil == 'Data Tidak Ditemukan' ? $hasil : 'Dengan demikian hasil tes adalah '.$hasil ?>
+                    <?= $hasil == 'Data Tidak Ditemukan' ? $hasil : 'Dengan demikian hasil nya adalah '.$hasil ?>
                   </div>
                         
                    
