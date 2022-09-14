@@ -15,7 +15,7 @@
           <div class="col-lg-12">
             <div class="p-5">
               <div class="text-center">
-                <h1 class="h4 text-gray-900 mb-4">SISTEM PAKAR KARAKTERISTIK</h1>
+                <h1 class="h4 text-gray-900 mb-4">SISTEM PAKAR TES MBTI</h1>
               </div>
               <div class="text-center">
                 <h2 class="h4 text-gray-900 mb-4">Hasil Diagnosa</h1>
@@ -24,7 +24,7 @@
                 <div class="form-group row">
                   <label for="staticEmail" class="col-sm-2 col-form-label">Nama</label>
                   <div class="col-sm-10">
-                    <input type="text" name="nama" class="form-control form-control-user" id="exampleInputEmail" placeholder="Masukan Nama" required value="<?= $this->session->userdata('nama_pasien'); ?>" disabled>
+                    <input type="text" name="nama" class="form-control form-control-user" id="exampleInputEmail" placeholder="Masukan Nama" required value="<?= $this->session->userdata('nama_riwayat'); ?>" disabled>
                   </div>
                 </div>
                 <div class="form-group row">
@@ -81,7 +81,7 @@
                     Hasil : 
                   </div>
                   <div class="form-user">
-                    Dengan demikian hasilnya adalah terdapat pada <?= $hasil ?>
+                    <?= $hasil == 'Data Tidak Ditemukan' ? $hasil : 'Dengan demikian hasil nya adalah '.$hasil ?>
                   </div>
                         
                    

@@ -18,7 +18,7 @@
                <div class="text-center">
 
                  <h1 class="h4 text-gray-900 mb-4">Input Biodata</h1>
-                 <form action="<?= base_url() ?>Diagnosa/simpan_pasien" method="post" class="user">
+                 <form action="<?= base_url() ?>Diagnosa/simpan_riwayat" method="post" class="user">
                    <div class="form-group">
                      <input type="text" name="nama" class="form-control form-control-user" id="exampleInputEmail" placeholder="Masukan Nama" required>
                    </div>

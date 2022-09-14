@@ -18,7 +18,7 @@
             <form action="<?= base_url('HalamanUser/register') ?>" method="post">
               <div class="form-group">
                 <label for="exampleInputEmail1">Nama Lengkap</label>
-                <input type="text" name="nama" class="form-control" id="exampleInputEmail1" placeholder="Nama Lengkap">
+                <input type="text" name="nama" class="form-control" id="exampleInputEmail1" placeholder="Nama Lengkap" required>
               </div>
               <div class="form-group">
                 <label for="exampleInputEmail1">Jenis Kelamin</label>
@@ -37,27 +37,27 @@
               </div>
               <div class="form-group">
                 <label for="exampleInputEmail1">No HP</label>
-                <input type="text" name="no_hp" class="form-control" id="exampleInputEmail1" placeholder="No HP">
+                <input type="text" name="no_hp" class="form-control" id="exampleInputEmail1" placeholder="No HP" required>
               </div>
               <div class="form-group">
                 <label for="exampleInputEmail1">Alamat</label>
-                <input type="text" name="alamat" class="form-control" id="exampleInputEmail1" placeholder="Alamat">
+                <input type="text" name="alamat" class="form-control" id="exampleInputEmail1" placeholder="Alamat" required>
               </div>
               <div class="form-group">
                 <label for="exampleInputEmail1">Email</label>
-                <input type="email" name="email" class="form-control" id="exampleInputEmail1" placeholder="Email">
+                <input type="email" name="email" class="form-control" id="exampleInputEmail1" placeholder="Email" required>
               </div>
               <div class="form-group">
                 <label for="exampleInputEmail1">Username</label>
-                <input type="text" name="username" class="form-control" id="exampleInputEmail1" placeholder="Username">
+                <input type="text" name="username" class="form-control" id="exampleInputEmail1" placeholder="Username" required>
               </div>
               <div class="form-group">
                 <label for="exampleInputPassword1">Password</label>
-                <input type="password" name="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+                <input type="password" name="password" class="form-control" id="exampleInputPassword1" placeholder="Password" required>
               </div>
               <div class="form-group">
                 <label for="exampleInputPassword1">Konfirmasi Password</label>
-                <input type="password" name="konfirmasi_password" class="form-control" id="exampleInputPassword1" placeholder="Konfirmasi Password">
+                <input type="password" name="konfirmasi_password" class="form-control" id="exampleInputPassword1" placeholder="Konfirmasi Password" required>
               </div>
               <button type="submit" class="btn btn-light">Buat Akun</button>
             </form>

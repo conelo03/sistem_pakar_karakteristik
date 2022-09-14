@@ -5,7 +5,7 @@
 
   <!-- Copyright -->
   <div class=" text-center text-dark p-3" style="background-color: slateblue;">
-    ©2022 Copyright Sistem Pakar Karakteristik
+    ©2022 Copyright Sistem Pakar Tes MBTI
 
   </div>
   <!-- Copyright -->

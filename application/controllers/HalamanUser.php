@@ -159,13 +159,13 @@ class HalamanUser extends CI_Controller {
 		$this->load->view('depan/diagnosa', $data);
 	}
 
-	public function simpan_pasien(){
+	public function simpan_riwayat(){
 
         $id_periksa = uniqid('periksa');
         $data['title'] = 'Cek Diagnosa';
         $id_user = $this->session->userdata('id_user');
    
-        $this->db->insert('pasien', [
+        $this->db->insert('riwayat', [
             'id_periksa'    => $id_periksa,
             'id_user'       => $id_user,
             'nama'          => $this->input->post('nama'),
@@ -487,6 +487,8 @@ class HalamanUser extends CI_Controller {
             $hasil = 'INTP';
         }else if($k[3] == 'y' && $k[4] == 'y' && $k[7] == 'y' && $k[8] == 'y' && $k[9] == 'y' && $k[10] == 'y' && $k[13] == 'y' && $k[14] == 'y'){
             $hasil = 'INTJ';
+        }else{
+            $hasil = 'Data Tidak Ditemukan';
         }
         // END
 
@@ -530,10 +532,12 @@ class HalamanUser extends CI_Controller {
         $cek_id = $this->db->get_where('hasil', ['id_periksa' => $id_periksa])->num_rows();
         $data['karakteristik'] = $this->db->get_where('karakteristik', ['deskripsi' => $hasil])->row_array(); 
         if($cek_id == 0){
-            $this->db->insert('hasil', [
-                'id_periksa'    => $id_periksa,
-                'kode_karakteristik' => $data['karakteristik']['kode_karakteristik'],
-            ]); 
+            if(count($data['karakteristik']) != 0){
+                $this->db->insert('hasil', [
+                    'id_periksa'    => $id_periksa,
+                    'kode_karakteristik' => $data['karakteristik']['kode_karakteristik'],
+                ]); 
+            }
         }
         
         $this->load->view('depan/hasil_diagnosa', $data);
@@ -543,7 +547,7 @@ class HalamanUser extends CI_Controller {
         if($id_periksa == null){
             $id_periksa = $this->session->userdata('id_periksa');
         }
-        $data['pasien'] = $this->db->get_where('pasien', ['id_periksa' => $id_periksa])->row_array();
+        $data['riwayat'] = $this->db->get_where('riwayat', ['id_periksa' => $id_periksa])->row_array();
         $data['title'] = 'Hasil Diagnosa';
         $data['pertanyaan'] = $this->db->get('rule_temp')->result_array(); 
 
@@ -601,6 +605,8 @@ class HalamanUser extends CI_Controller {
             $hasil = 'INTP';
         }else if($k[3] == 'y' && $k[4] == 'y' && $k[7] == 'y' && $k[8] == 'y' && $k[9] == 'y' && $k[10] == 'y' && $k[13] == 'y' && $k[14] == 'y'){
             $hasil = 'INTJ';
+        }else{
+            $hasil = 'Data Tidak Ditemukan';
         }
         // END
 
@@ -638,7 +644,7 @@ class HalamanUser extends CI_Controller {
         // }
         //var_dump($hasil);
         $data['title'] = 'Hasil Diagnosa';
-        $data['pasien'] = $this->db->get_where('pasien', ['id_periksa' => $id_periksa])->row_array();
+        $data['riwayat'] = $this->db->get_where('riwayat', ['id_periksa' => $id_periksa])->row_array();
         $data['user'] = $this->db->get_where('admin', ['username' => $this->session->userdata('username')])->row_array();
         $data['pertanyaan'] = $this->db->get('rule_temp')->result_array(); 
         $data['hasil'] = $hasil;
@@ -654,11 +660,11 @@ class HalamanUser extends CI_Controller {
 	{
 		$data['title'] = 'Riwayat Diagnosa';
         $id_user = $this->session->userdata('id_user');
-        $data['riwayat']    = $this->db->select('*, pasien.nama as namapasien')
+        $data['riwayat']    = $this->db->select('*, riwayat.nama as namariwayat')
             ->from('hasil')
-            ->join('pasien', 'pasien.id_periksa=hasil.id_periksa')
+            ->join('riwayat', 'riwayat.id_periksa=hasil.id_periksa')
             ->join('karakteristik', 'karakteristik.kode_karakteristik=hasil.kode_karakteristik')
-            ->where('pasien.id_user', $id_user)
+            ->where('riwayat.id_user', $id_user)
             ->get()->result();
 		$this->load->view('depan/riwayat_diagnosa', $data);
 	}

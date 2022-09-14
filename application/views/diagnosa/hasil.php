@@ -61,7 +61,7 @@
                     Hasil : 
                   </div>
                   <div class="form-user">
-                    Dengan demikian hasil nya adalah <?= $hasil ?>
+                    <?= $hasil == 'Data Tidak Ditemukan' ? $hasil : 'Dengan demikian hasil nya adalah '.$hasil ?>
                   </div>
                         
                    

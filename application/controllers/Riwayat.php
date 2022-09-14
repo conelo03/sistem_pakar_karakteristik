@@ -6,9 +6,9 @@ class Riwayat extends CI_Controller
 
 	public function index()
 	{
-		$data['riwayat']	= $this->db->select('*, pasien.nama as namapasien')
+		$data['riwayat']	= $this->db->select('*, riwayat.nama as namariwayat')
 			->from('hasil')
-			->join('pasien', 'pasien.id_periksa=hasil.id_periksa')
+			->join('riwayat', 'riwayat.id_periksa=hasil.id_periksa')
 			->join('karakteristik', 'karakteristik.kode_karakteristik=hasil.kode_karakteristik')
 			->get()->result();
 

@@ -2,7 +2,7 @@
 <div class="container">
   <div class="jumbotron jumbotron-fluid" style="background: slateblue;">
     <div class="container">
-      <h1 class="display-10">Jenis Karakteristik</h1>
+      <h1 class="display-10">Jenis Karakteristik MBTI</h1>
     </div>
   </div>
   <?php foreach ($karakteristik as $key) { ?>

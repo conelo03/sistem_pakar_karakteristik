@@ -21,7 +21,7 @@ class Diagnosa extends CI_Controller {
         $this->db->query("DELETE from rule_temp");
 
         $this->session->unset_userdata('id_periksa');  
-        $this->session->unset_userdata('nama_pasien'); 
+        $this->session->unset_userdata('nama_riwayat'); 
         $this->session->unset_userdata('no_telp'); 
         $this->session->unset_userdata('alamat'); 
         $this->session->unset_userdata('umur'); 
@@ -38,7 +38,7 @@ class Diagnosa extends CI_Controller {
 	    $this->load->view('templates/footer');
 	}
 
-	public function simpan_pasien(){
+	public function simpan_riwayat(){
 
         $id_periksa = uniqid('periksa');
         $data['title'] = 'Uji Coba Diagnosa';
@@ -46,7 +46,7 @@ class Diagnosa extends CI_Controller {
         
         $sesi_uji_coba = array(
             'id_periksa'    => $id_periksa,
-            'nama_pasien'          => $this->input->post('nama'),
+            'nama_riwayat'          => $this->input->post('nama'),
             'no_telp'       => $this->input->post('no_telp'),
             'alamat'        => $this->input->post('alamat'),
             'umur'          => $this->input->post('umur'),
@@ -164,9 +164,9 @@ class Diagnosa extends CI_Controller {
                 $index = $index;
                 if($cek_kelompok == 3){
                     if($cek_kelompok_y >= 2){
-                        $data['indikator'] = $this->db->select('*, CAST(kode_indikator as SIGNED) AS casted_column')->where('kelompok', 8)->order_by('length(kode_indikator)')->order_by('kode_indikator')->get('indikator')->result_array();
-                    }else{
                         $data['indikator'] = $this->db->select('*, CAST(kode_indikator as SIGNED) AS casted_column')->where('kelompok', 9)->order_by('length(kode_indikator)')->order_by('kode_indikator')->get('indikator')->result_array();
+                    }else{
+                        $data['indikator'] = $this->db->select('*, CAST(kode_indikator as SIGNED) AS casted_column')->where('kelompok', 8)->order_by('length(kode_indikator)')->order_by('kode_indikator')->get('indikator')->result_array();
                     }
                     $index = 0;
                     
@@ -221,9 +221,9 @@ class Diagnosa extends CI_Controller {
                 $index = $index;
                 if($cek_kelompok == 3){
                     if($cek_kelompok_y >= 2){
-                        $data['indikator'] = $this->db->select('*, CAST(kode_indikator as SIGNED) AS casted_column')->where('kelompok', 12)->order_by('length(kode_indikator)')->order_by('kode_indikator')->get('indikator')->result_array();
-                    }else{
                         $data['indikator'] = $this->db->select('*, CAST(kode_indikator as SIGNED) AS casted_column')->where('kelompok', 13)->order_by('length(kode_indikator)')->order_by('kode_indikator')->get('indikator')->result_array();
+                    }else{
+                        $data['indikator'] = $this->db->select('*, CAST(kode_indikator as SIGNED) AS casted_column')->where('kelompok', 12)->order_by('length(kode_indikator)')->order_by('kode_indikator')->get('indikator')->result_array();
                     }
                     $index = 0;
                     
@@ -337,7 +337,7 @@ class Diagnosa extends CI_Controller {
         for ($i=1; $i <= 16; $i++) { 
             // cek jawaban berdasarkan kelompok
             $cek_jawaban = $this->db->get_where('rule_temp',[ 'id_periksa' => $id_periksa, 'jawaban' => 'y', 'kelompok' => $i])->num_rows();
-            // jika jawaban yg 'ya' ada lebih dari samadengan 2, maka kelompok tersebut 'y'
+            // jika jawaban yg 'ya' ada lebih dari sama dengan 2, maka kelompok tersebut 'y'
             if($cek_jawaban >= 2){
                 array_push($k, 'y');
             } else {
@@ -378,6 +378,8 @@ class Diagnosa extends CI_Controller {
             $hasil = 'INTP';
         }else if($k[3] == 'y' && $k[4] == 'y' && $k[7] == 'y' && $k[8] == 'y' && $k[9] == 'y' && $k[10] == 'y' && $k[13] == 'y' && $k[14] == 'y'){
             $hasil = 'INTJ';
+        }else{
+            $hasil = 'Data Tidak Ditemukan';
         }
         // END
 
@@ -485,6 +487,8 @@ class Diagnosa extends CI_Controller {
             $hasil = 'INTP';
         }else if($k[3] == 'y' && $k[4] == 'y' && $k[7] == 'y' && $k[8] == 'y' && $k[9] == 'y' && $k[10] == 'y' && $k[13] == 'y' && $k[14] == 'y'){
             $hasil = 'INTJ';
+        }else{
+            $hasil = 'Data Tidak Ditemukan';
         }
         // END
 

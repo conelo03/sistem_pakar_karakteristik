@@ -2,14 +2,14 @@
 <div class="container">
   <div class="jumbotron jumbotron-fluid" style="background: slateblue;">
     <div class="container">
-      <h1 class="display-10">Hasil Diagnosa Tingkat Kecemasan Orang Tua Terhadap Proses PJJ Di Masa Pandemi COVID-19</h1>
-      <p class="lead">Perhatikan hasil diagnosa dibawah!</p>
+      <h1 class="display-10">Sistem Pakar Tes MBTI Untuk Menentukan Pola Belajar</h1>
+      <p class="lead">Perhatikan hasil tes anda dibawah!</p>
     </div>
   </div>
 
   <div class="card">
     <div class="card-header">
-      <h3 class="h4 text-gray-900">Hasil Diagnosa</h3>
+      <h3 class="h4 text-gray-900">Hasil Tes</h3>
     </div>
     <div class="card-body">
       <div class="row">
@@ -22,29 +22,33 @@
                     Hasil : 
                   </div>
                   <div class="form-user">
-                    Dengan demikian hasilnya adalah <?= $hasil ?>
+                    <?= $hasil == 'Data Tidak Ditemukan' ? $hasil : 'Dengan demikian hasil tes adalah '.$hasil ?>
                   </div>
                         
                    
               </div>
+              <?php
+                if(count($karakteristik) != 0){ ?>
+                  <div class="form-group">
+                    <div class="form-user">
+                      Karakter :
+                    </div>
+                    <div class="form-user">
+                      <?= $karakteristik['nama'] ?>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <div class="form-user">
+                      Deskripsi :
+                    </div>
+                    <div class="form-user">
+                      <?= $karakteristik['solusi'] ?>
+                    </div>
 
-              <div class="form-group">
-                <div class="form-user">
-                  Karakter :
-                </div>
-                <div class="form-user">
-                  <?= $karakteristik['nama'] ?>
-                </div>
-              </div>
-              <div class="form-group">
-                <div class="form-user">
-                  Deskripsi :
-                </div>
-                <div class="form-user">
-                  <?= $karakteristik['solusi'] ?>
-                </div>
-
-              </div>
+                  </div>
+              <?php  }
+              ?>
+              
 
 
             </form>

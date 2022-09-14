@@ -2,7 +2,7 @@
 <div class="container">
   <div class="jumbotron jumbotron-fluid" style="background: slateblue;">
     <div class="container">
-      <h3 class="display-10">Riwayat Cek Karakteristik</h3>
+      <h3 class="display-10">Riwayat Tes MBTI</h3>
       <p class="lead"></p>
     </div>
   </div>
@@ -44,7 +44,7 @@
                   <tr>
                     <td><?= $no++ ?></td>
                     <td><?= $riwayat[$i]->created_date ?></td>
-                    <td><?= $riwayat[$i]->namapasien ?></td>
+                    <td><?= $riwayat[$i]->namariwayat ?></td>
                     <td><?= $riwayat[$i]->umur ?></td>
                     <td><?= $riwayat[$i]->no_telp ?></td>
                     <td><?= $riwayat[$i]->nama ?></td>

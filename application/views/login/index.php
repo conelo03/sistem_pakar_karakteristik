@@ -29,10 +29,10 @@
                                      <?= $this->session->flashdata('pesan'); ?>
                                      <form action="<?php echo base_url() ?>Login/aksi_login" method="post" class="user">
                                          <div class="form-group">
-                                             <input type="text" name="username" class="form-control form-control-user" placeholder="Username">
+                                             <input type="text" name="username" class="form-control form-control-user" placeholder="Username" required>
                                          </div>
                                          <div class="form-group">
-                                             <input type="password" name="password" class="form-control form-control-user" placeholder="Password">
+                                             <input type="password" name="password" class="form-control form-control-user" placeholder="Password" required>
                                          </div>
                                          <button type="submit" class="btn btn-user btn-block" style="background: slateblue; color: white;">
                                              Login

@@ -2,8 +2,8 @@
 <div class="container">
   <div class="jumbotron jumbotron-fluid" style="background: slateblue;">
     <div class="container">
-      <h1 class="display-4"><b>Konsultasi</b></h1>
-      <p class="lead">Jawablah pertanyaan dibawah ini sesuai dengan yang anda rasakan dan alami dan jawablah dengan konsisten. Pertanyaan beberapa memiliki kemiripan.</p>
+      <h1 class="display-4"><b>Tes MBTI</b></h1>
+      <p class="lead">Jawablah pertanyaan dibawah ini sesuai dengan yang anda rasakan dan jawablah dengan konsisten. Pertanyaan beberapa memiliki kemiripan.</p>
     </div>
   </div>
 
@@ -22,7 +22,7 @@
                 <div class="form-group">
                   <input type="hidden" name="id_periksa" class="form-control form-control-user" id="exampleInputEmail" placeholder="Masukan Nama" value="<?= $this->session->userdata('id_periksa'); ?>" required>
                 </div>
-                <p>Apakah ada <?= $indikator[$index]['nama'] ?>?</p>
+                <p><?= $indikator[$index]['nama'] ?>?</p>
                 <?php
                 $index_pars = $index + 1;
                 ?>

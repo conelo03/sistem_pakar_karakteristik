@@ -47,7 +47,7 @@
                     if ($n == 1) { ?>
                       <tr>
                         <td><?= $no++ ?></td>
-                        <td><?= $riwayat[$i]->namapasien ?></td>
+                        <td><?= $riwayat[$i]->namariwayat ?></td>
                         <td><?= $riwayat[$i]->alamat ?></td>
                         <td><?= $riwayat[$i]->umur ?></td>
                         <td><?= $riwayat[$i]->no_telp ?></td>

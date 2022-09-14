@@ -14,7 +14,7 @@
   <link href="<?= base_url('assets/'); ?>vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
 
 
-  <title>Sistem Pakar</title>
+  <title>Sistem Pakar Tes MBTI</title>
 </head>
 
 <body class="bg-light">
@@ -35,7 +35,7 @@
             <div class="col-lg-12">
               <div class="p-5">
                 <div class="text-center">
-                  <h1 class="h4 text-gray-900 mb-4">SISTEM PAKAR KARAKTERISTIK</h1>
+                  <h1 class="h4 text-gray-900 mb-4">SISTEM PAKAR TES MBTI</h1>
                 </div>
                 <div class="text-center">
                   <h2 class="h4 text-gray-900 mb-4">Hasil Diagnosa</h1>
@@ -44,31 +44,31 @@
                   <div class="form-group row">
                     <label for="staticEmail" class="col-sm-2 col-form-label">Nama</label>
                     <div class="col-sm-10">
-                      <input type="text" name="nama" class="form-control form-control-user" id="exampleInputEmail" placeholder="Masukan Nama" required value="<?= $pasien['nama']; ?>" disabled>
+                      <input type="text" name="nama" class="form-control form-control-user" id="exampleInputEmail" placeholder="Masukan Nama" required value="<?= $riwayat['nama']; ?>" disabled>
                     </div>
                   </div>
                   <div class="form-group row">
                     <label for="staticEmail" class="col-sm-2 col-form-label">Jenis Kelamin</label>
                     <div class="col-sm-10">
-                      <input type="text" name="nama" class="form-control form-control-user" id="exampleInputEmail" placeholder="Masukan Nama" required value="<?= $pasien['jenis_kelamin']; ?>" disabled>
+                      <input type="text" name="nama" class="form-control form-control-user" id="exampleInputEmail" placeholder="Masukan Nama" required value="<?= $riwayat['jenis_kelamin']; ?>" disabled>
                     </div>
                   </div>
                   <div class="form-group row">
                     <label for="staticEmail" class="col-sm-2 col-form-label">Alamat</label>
                     <div class="col-sm-10">
-                      <input type="text" name="alamat" class="form-control form-control-user" id="exampleInputEmail" placeholder="Masukan Alamat" required value="<?= $pasien['alamat']; ?>" disabled>
+                      <input type="text" name="alamat" class="form-control form-control-user" id="exampleInputEmail" placeholder="Masukan Alamat" required value="<?= $riwayat['alamat']; ?>" disabled>
                     </div>
                   </div>
                   <div class="form-group row">
                     <label for="staticEmail" class="col-sm-2 col-form-label">Umur</label>
                     <div class="col-sm-10">
-                      <input type="text" name="alamat" class="form-control form-control-user" id="exampleInputEmail" placeholder="Masukan Alamat" required value="<?= $pasien['umur']; ?>" disabled>
+                      <input type="text" name="alamat" class="form-control form-control-user" id="exampleInputEmail" placeholder="Masukan Alamat" required value="<?= $riwayat['umur']; ?>" disabled>
                     </div>
                   </div>
                   <div class="form-group row">
                     <label for="staticEmail" class="col-sm-2 col-form-label">No. HP</label>
                     <div class="col-sm-10">
-                      <input type="text" name="no_telp" class="form-control form-control-user" id="exampleInputEmail" placeholder="Masukan No Telepon" required value="<?= $pasien['no_telp']; ?>" disabled>
+                      <input type="text" name="no_telp" class="form-control form-control-user" id="exampleInputEmail" placeholder="Masukan No Telepon" required value="<?= $riwayat['no_telp']; ?>" disabled>
                     </div>
                   </div>
                   
@@ -77,29 +77,33 @@
                         Hasil : 
                       </div>
                       <div class="form-user">
-                        Dengan demikian hasilnya adalah <?= $hasil ?>
+                        <?= $hasil == 'Data Tidak Ditemukan' ? $hasil : 'Dengan demikian hasil tes anda adalah '.$hasil ?>
                       </div>
                             
                       
                   </div>
 
-                  <div class="form-group">
-                    <div class="form-user">
-                      Karakter :
-                    </div>
-                    <div class="form-user">
-                      <?= $karakteristik['nama'] ?>
-                    </div>
-                  </div>
-                  <div class="form-group">
-                    <div class="form-user">
-                      Deskripsi :
-                    </div>
-                    <div class="form-user">
-                      <?= $karakteristik['solusi'] ?>
-                    </div>
+                  <?php
+                    if(count($karakteristik) != 0){ ?>
+                      <div class="form-group">
+                        <div class="form-user">
+                          Karakter :
+                        </div>
+                        <div class="form-user">
+                          <?= $karakteristik['nama'] ?>
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <div class="form-user">
+                          Deskripsi :
+                        </div>
+                        <div class="form-user">
+                          <?= $karakteristik['solusi'] ?>
+                        </div>
 
-                  </div>
+                      </div>
+                  <?php  }
+                  ?>
 
                 </form>
                 <div class="row">
